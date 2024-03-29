@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -33,7 +35,7 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String createUser(@ModelAttribute("user") User user,
+    public String createUser(@ModelAttribute("user") @Valid User user,
                              @RequestParam(value = "nameRoles", required = false) String roles) {
         user.setRoles(roleService.getByName(roles));
         userService.createUser(user);
@@ -41,7 +43,7 @@ public class AdminController {
     }
 
     @PostMapping ("/update/{id}")
-    public String update(@ModelAttribute("users") User user,
+    public String update(@ModelAttribute("users") @Valid User user,
                          @RequestParam(value = "roleName", required = false) String roles) {
         user.setRoles(roleService.getByName(roles));
         userService.editUser(user);
